@@ -70,3 +70,7 @@ main {
 .roll-button:active {
   transform: scale(0.95);
 }
+
+.die button.held {
+  background-color: #59E391;
+}

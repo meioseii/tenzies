@@ -19,11 +19,14 @@ function App() {
   }
 
   const allDice = dice.map(die => {
-    return <Dice 
+    return <Dice
               key={die.id}
               value={die.value}
+              isHeld={die.isHeld}
             />
   })
+
+  console.log(dice)
 
   function rollDice() {
     setDice(allNewDice())
