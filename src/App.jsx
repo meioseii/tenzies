@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Dice from './Dice'
 
@@ -14,13 +14,23 @@ function App() {
     return newDice
   }
 
-  const dieElements = dice.map(die => <Dice value={die}/>)
+  const allDice = dice.map(die => {
+    return <Dice value={die}/>
+  })
+
+  function handleClick() {
+    setDice(allNewDice())
+  }
+  
 
   return (
     <main>
       <div className='dice-container'>
-        {dieElements}
+        {allDice}
       </div>
+      <button 
+        className='roll-button'
+        onClick={handleClick}>Roll</button>
     </main>
   )
 }
