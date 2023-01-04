@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import Confetti from 'react-confetti'
 import Info from './Info.jsx'
 import Dice from './Dice.jsx'
 import { nanoid } from 'nanoid'
@@ -7,6 +8,18 @@ import { nanoid } from 'nanoid'
 function App() {
 
   const [dice, setDice] = useState(allNewDice)
+
+  const [tenzies, setTenzies] = useState(false)
+
+  useEffect(() => {
+    const allHeld = dice.every(die => die.isHeld)
+    const firstVal = dice[0].value
+    const allValSame = dice.every(die => die.value === firstVal)
+    if (allHeld && allValSame) {
+      setTenzies(prevTenzies => !prevTenzies)
+      console.log("You Won")
+    }
+  }, [dice])
 
   function allNewDice() {
     const newDice = []
@@ -36,7 +49,6 @@ function App() {
           return (die.id === id) ? {...die, isHeld: !die.isHeld} : die
         })
     })
-    console.log(id)
   }
 
   const allDice = dice.map(die => {
@@ -50,13 +62,14 @@ function App() {
 
   return (
     <main>
+      {tenzies && <Confetti/>}
       <Info />
       <div className='dice-container'>
         {allDice}
       </div>
       <button 
         className='roll-button'
-        onClick={rollDice}>Roll</button>
+        onClick={rollDice}>{tenzies ? "New Game" : "Roll"}</button>
     </main>
   )
 }
