@@ -24,21 +24,32 @@ function App() {
   function allNewDice() {
     const newDice = []
     for (let i = 0; i < 10; i++) {
-      newDice.push(
-        { id: nanoid(),
-          value: Math.floor(Math.random() * 7),
-          isHeld: false})
+      newDice.push(newDiceSet())
     }
     return newDice
+  }
+
+  function newDiceSet() {
+    return {
+      id: nanoid(),
+      value: Math.floor(Math.random() * 7),
+      isHeld: false
+    }
+  }
+
+  function newGame() {
+    setDice(oldDice => {
+      return oldDice.map(die => {
+        return newDiceSet()
+      })
+    })
+    setTenzies(prevTenzies => !prevTenzies)
   }
   
   function rollDice() {
     setDice(oldDice => {
       return oldDice.map(die => {
-        return die.isHeld ? die : 
-          {id: nanoid(),
-          value: Math.floor(Math.random() * 7),
-          isHeld: false}
+        return die.isHeld ? die : newDiceSet()
       })
     })
   }
@@ -57,6 +68,7 @@ function App() {
               value={die.value}
               isHeld={die.isHeld}
               holdDice={() => holdDice(die.id)}
+              disable={tenzies}
             />
   })
 
@@ -69,7 +81,8 @@ function App() {
       </div>
       <button 
         className='roll-button'
-        onClick={rollDice}>{tenzies ? "New Game" : "Roll"}</button>
+        onClick={tenzies ? newGame : rollDice}>{tenzies ? "New Game" : "Roll"}
+      </button>
     </main>
   )
 }
