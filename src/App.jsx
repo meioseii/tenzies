@@ -19,7 +19,14 @@ function App() {
   }
   
   function rollDice() {
-    setDice(allNewDice())
+    setDice(oldDice => {
+      return oldDice.map(die => {
+        return die.isHeld ? die : 
+          {id: nanoid(),
+          value: Math.floor(Math.random() * 7),
+          isHeld: false}
+      })
+    })
   }
 
   function holdDice(id) {
