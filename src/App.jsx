@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import Dice from './Dice'
+import Info from './Info.jsx'
+import Dice from './Dice.jsx'
 import { nanoid } from 'nanoid'
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
 
   return (
     <main>
+      <Info />
       <div className='dice-container'>
         {allDice}
       </div>
